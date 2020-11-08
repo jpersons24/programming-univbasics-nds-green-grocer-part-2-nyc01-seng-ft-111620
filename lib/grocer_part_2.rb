@@ -70,24 +70,18 @@ def checkout(cart, coupons)
   # BEFORE it begins the work of calculating the total (or else you might have
   # some irritated customers
 
-  consolidate_cart(cart)
-  # consolidated_cart = consolidate_cart(cart)
+  consolidated_cart = consolidate_cart(cart)
+  couponed_cart = apply_coupons(consolidated_cart)
+  final_cart = apply_clearance(couponed_cart)
 
-  consolidated_cart_with_coupons = apply_coupons(consolidate_cart(cart), coupons)
-
-  consolidated_and_discounts_applied = apply_clearance(consolidated_cart_with_coupons)
-
-  consolidated_and_discounts_applied.each do |grocery_item|
-    grand_total = grocery_item[:price] * grocery_item[:count]
-    grand_total
-
-    if grand_total >= 100
-      final_total = grand_total * 0.10
-      final_total
-    else
-      grand_total
-    end
-    
+  total = 0
+  counter = 0
+  while counter < final_cart.length
+    total += final_cart[counter][:price] * final_cart[counter][:count]
+    counter += 1
   end
-
+  if total > 100
+    total -= (total * 0.10)
+  end
+  total
 end
