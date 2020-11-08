@@ -80,13 +80,14 @@ def checkout(cart, coupons)
   consolidated_and_discounts_applied.each do |grocery_item|
     grand_total = grocery_item[:price] * grocery_item[:count]
     grand_total
-  end
 
-  if grand_total >= 100
-    final_total = grand_total * 0.10
-    final_total
-  else
-    grand_total
+    if grand_total >= 100
+      final_total = grand_total * 0.10
+      final_total
+    else
+      grand_total
+    end
+    
   end
 
 end
